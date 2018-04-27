@@ -8,9 +8,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { AuthGuard } from './services/auth-guard.service';
 
+import { UsuariosModule } from './admin/usuarios/usuarios.module';
 
 import { LoginComponent } from './pages/login/login.component';
-// import { UsuariosComponent } from './admin/usuarios/usuarios.component';
 import { UsuarioService } from './services/usuario.service';
 import { AuthService } from './services/auth.service';
 import { PageNotFoundComponent } from './pages/errors/not-found.component';
@@ -25,8 +25,9 @@ import { PageNotFoundComponent } from './pages/errors/not-found.component';
   imports: [
     BrowserModule,
     HttpModule,
+    UsuariosModule,
     AdminModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [UsuarioService, AuthService, AuthGuard],
   bootstrap: [AppComponent]

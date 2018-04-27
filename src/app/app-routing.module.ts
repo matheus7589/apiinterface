@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './pages/login/login.component';
-import { UsuariosComponent } from './admin/usuarios/edit-usuario/usuarios.component';
+// import { UsuariosComponent } from './admin/usuarios/edit-usuario/usuarios-edit.component';
 import { PageNotFoundComponent } from './pages/errors/not-found.component';
 
 const appRoutes: Routes = [

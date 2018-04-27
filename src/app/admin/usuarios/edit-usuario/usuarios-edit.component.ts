@@ -6,11 +6,11 @@ import { AuthService } from '../../../services/auth.service';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 @Component({
-  selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.css']
+  // selector: 'app-usuarios',
+  templateUrl: './usuarios-edit.component.html',
+  styleUrls: ['./usuarios-edit.component.css']
 })
-export class UsuariosComponent implements OnInit {
+export class UsuariosEditComponent implements OnInit {
 
   title: string;
   error: string = null;
@@ -23,12 +23,13 @@ export class UsuariosComponent implements OnInit {
     this.title = 'Usuários';
   }
 
-  enviar(nome: string, password: string): boolean {
+  enviar(nome: string, password: string, email: string): boolean {
     let usuario: Usuarios;
     usuario = new Usuarios();
     usuario.id = 15;
     usuario.nome = nome;
     usuario.password = password;
+    usuario.email = email;
 
     this.user.edit(usuario).subscribe(
       (retorno) => {
@@ -40,7 +41,7 @@ export class UsuariosComponent implements OnInit {
       },
       error => {
         (error) = this.error = error;
-      });;
+      });
     return true;
   }
 

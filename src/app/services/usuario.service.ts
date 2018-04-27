@@ -31,14 +31,15 @@ export class UsuarioService {
   }
 
   public edit(usuario: any): Observable<any> {
-    // console.log(usuario);
+    console.log(usuario);
     const body = 'nome=' + usuario.nome +
-      '&password=' + usuario.password;
+      '&password=' + usuario.password +
+    '&email=' + usuario.email;
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers});
 
-    return this.http.post(this.urlApi + '/edit/' + usuario.id + '.json?token=' + this.token, body, options)
+    return this.http.post(this.urlApi + '/edit/' + usuario.id + '.json?token=' + this.auth.getToken(), body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

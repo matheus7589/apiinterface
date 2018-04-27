@@ -4,9 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../services/auth-guard.service';
 
 import { AdminComponent } from './admin.component';
-import { AdminDashboardComponent } from './admin-dashboard.component';
-import { ManageUsuariosComponent } from './manage-usuarios.component';
-import { UsuariosComponent } from './usuarios/edit-usuario/usuarios.component';
+import { UsuariosEditComponent } from './usuarios/edit-usuario/usuarios-edit.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const adminRoutes: Routes = [
@@ -18,7 +16,7 @@ const adminRoutes: Routes = [
       {
         path: '',
         children: [
-          { path: 'usuarios', component: UsuariosComponent },
+          // { path: 'usuarios', component: UsuariosEditComponent },
           { path: '', component: DashboardComponent }
         ]
       }

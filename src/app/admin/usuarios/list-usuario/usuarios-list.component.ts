@@ -7,10 +7,11 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 @Component({
   // selector: 'app-usuarios',
-  templateUrl: './usuarios-edit.component.html',
-  styleUrls: ['./usuarios-edit.component.css']
+  templateUrl: './usuarios-list.component.html',
+  styleUrls: ['./usuarios-list.component.css']
 })
-export class UsuariosEditComponent implements OnInit {
+
+export class UsuariosListComponent implements OnInit {
 
   title: string;
   error: string = null;
