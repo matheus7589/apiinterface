@@ -1,0 +1,47 @@
+import { Component, OnInit } from '@angular/core';
+import { UsuarioService } from '../../../services/usuario.service';
+import { Usuarios } from '../../../services/usuarios';
+import { AppComponent } from '../../../app.component';
+import { AuthService } from '../../../services/auth.service';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+
+@Component({
+  selector: 'app-usuarios',
+  templateUrl: './usuarios.component.html',
+  styleUrls: ['./usuarios.component.css']
+})
+export class UsuariosComponent implements OnInit {
+
+  title: string;
+  error: string = null;
+
+  constructor( private http: Http, private user: UsuarioService, private app: AppComponent, private auth: AuthService) {
+    app.logged = this.auth.loggedIn();
+  }
+
+  ngOnInit() {
+    this.title = 'Usuários';
+  }
+
+  enviar(nome: string, password: string): boolean {
+    let usuario: Usuarios;
+    usuario = new Usuarios();
+    usuario.id = 15;
+    usuario.nome = nome;
+    usuario.password = password;
+
+    this.user.edit(usuario).subscribe(
+      (retorno) => {
+        if (retorno) {
+          console.log(retorno);
+        } else {
+          this.error = 'Acesso negado';
+        }
+      },
+      error => {
+        (error) = this.error = error;
+      });;
+    return true;
+  }
+
+}
