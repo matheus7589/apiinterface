@@ -8,52 +8,47 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 @Component({
   // selector: 'app-usuarios',
-  templateUrl: './usuarios-list.component.html',
-  styleUrls: ['./usuarios-list.component.css']
+  templateUrl: './usuarios-add.component.html',
+  styleUrls: ['./usuarios-add.component.css']
 })
 
-export class UsuariosListComponent implements OnInit {
+export class UsuariosAddComponent implements OnInit {
 
   title: string;
-  usuarios: any;
+  error: string = null;
 
   constructor( private http: Http, private user: UsuarioService, private app: AppComponent,
     private auth: AuthService, private router: Router) {
     app.logged = this.auth.loggedIn();
-    this.getUsuarios();
   }
 
   ngOnInit() {
     this.title = 'Usuários';
   }
 
-  getUsuarios(){
-    this.user.view().subscribe(
+  add(nome: string, password: string, email: string): boolean {
+    let usuario: Usuario;
+    usuario = new Usuario();
+    usuario.nome = nome;
+    usuario.password = password;
+    usuario.email = email;
+    usuario.codEmpresa = null;
+    usuario.nomeEmpresa = null;
+    usuario.inorte = null;
+
+    this.user.add(usuario).subscribe(
       (retorno) => {
         if (retorno) {
-          // console.log(retorno);
-          this.usuarios = retorno.usuario;
+          console.log(retorno);
+        } else {
+          this.error = 'Acesso negado';
         }
-    });
-  }
-
-  refresh() {
-    this.router.navigate(['admin/usuarios']);
-    this.ngOnInit();   
-  }
-
-
-  edit(userid: number) {
-     this.router.navigate(['admin/usuarios/edit/' + userid]); 
-  }
-
-  delet(userid: number) {
-    this.user.delete(userid).subscribe(
-      (retorno) => {
-         if (retorno) {
-           this.refresh();
-         }
+      },
+      error => {
+        (error) = this.error = error;
       });
+    return true;
   }
+
 
 }

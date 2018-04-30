@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Usuarios} from '../../services/usuarios';
 import { AuthService } from '../../services/auth.service';
 import {Router} from '@angular/router';
 
@@ -29,8 +28,6 @@ export class LoginComponent implements OnInit {
         if (retorno) {
           // this.empresasServ.setFiltro(Array(this.empresasServ.all()[0]));
           // this.setAuthFirebase();
-          console.log(retorno);
-          console.log(this.auth.getToken());
           // this.router.navigate(['/admin']);
           this.router.navigate(['admin/']);
         } else {

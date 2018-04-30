@@ -24,7 +24,26 @@ export class UsuarioService {
       .catch(this.handleError);
   }
 
-  public get(id: Number): Observable<any> {
+  public add(usuario: any): Observable<any> {
+    const body = 'nome=' + usuario.nome +
+      '&senha=' + usuario.password +
+    '&email=' + usuario.email;
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers});
+
+    return this.http.post(this.urlApi + '/add/.json?token=' + this.auth.getToken(), body, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  public view(): Observable<any> {
+    return this.http.get(this.urlApi + '/.json?token=' + this.auth.getToken())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  public get(id: number): Observable<any> {
     return this.http.get(this.urlApi + '/' + id + '.json?token=' + this.auth.getToken())
       .map(this.extractData)
       .catch(this.handleError);
@@ -40,6 +59,16 @@ export class UsuarioService {
     const options = new RequestOptions({headers: headers});
 
     return this.http.post(this.urlApi + '/edit/' + usuario.id + '.json?token=' + this.auth.getToken(), body, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  public delete(id: number): Observable<any> {
+    // const body = '';
+    // const headers = new Headers();
+    // headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    // const options = new RequestOptions({headers: headers});
+    return this.http.delete(this.urlApi + '/delete/' + id + '.json?token=' + this.auth.getToken())
       .map(this.extractData)
       .catch(this.handleError);
   }

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
 
 
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { AuthService } from './services/auth.service';
 import { PageNotFoundComponent } from './pages/errors/not-found.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +25,7 @@ import { PageNotFoundComponent } from './pages/errors/not-found.component';
     PageNotFoundComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     HttpModule,
     UsuariosModule,
@@ -35,7 +38,7 @@ import { PageNotFoundComponent } from './pages/errors/not-found.component';
 export class AppModule {
 
   // private static url = 'http://54.233.175.231/v1/api_gestor';
-  private static url = 'http://localhost:8080/api-gestor';
+  private static url = 'http://localhost/api-gestor';
   private static token = 'fb65412704d49d604e97bfdb770f6d8423918bf0039bd3579d8dd5b46c57e85c';
   public logged = false;
 

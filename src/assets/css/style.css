@@ -23,6 +23,17 @@ h3 {
     font-weight: 400;
 }
 
+/*Modificações Adicionais*/
+th {
+    background-color: #ff9933;
+    color: white;
+}
+
+.table td {
+   text-align: center;   
+}
+/*Modificações Adicionais*/
+
 .spinner {
     margin: 100px auto;
     width: 50px;
