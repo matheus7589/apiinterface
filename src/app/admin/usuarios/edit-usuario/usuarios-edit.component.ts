@@ -32,13 +32,13 @@ export class UsuariosEditComponent implements OnInit {
 
   getUser() {
 
-    let id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
     this.user.get(Number(id)).subscribe(
       (retorno) => {
         if (retorno) {
           retorno = retorno.usuario;
           this.usuario.id = retorno.Id;
-          if(retorno.nome == null || retorno.nome == ''){
+          if(retorno.nome == null || retorno.nome === '') {
             retorno.nome = ' ';
           }
           this.usuario.nome = retorno.nome;

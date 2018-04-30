@@ -8,6 +8,8 @@ import { UsuariosListComponent } from './list-usuario/usuarios-list.component';
 import { UsuariosAddComponent } from './add-usuario/usuarios-add.component';
 import { UsuariosRelationComponent } from './relation-usuario/usuarios-relation.component';
 
+import { UsuarioEmpresaService } from '../../services/usuario-empresa.service';
+
 // import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { UsuariosRoutingModule } from './usuarios-routing.module';
@@ -30,3 +32,5 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
   ]
 })
 export class UsuariosModule {}
+
+
