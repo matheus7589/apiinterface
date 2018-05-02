@@ -7,6 +7,9 @@ import { AuthService } from '../../../services/auth.service';
 import { UsuarioEmpresaService } from '../../../services/usuario-empresa.service';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+//Notificacoes
+// import { SimpleNotificationsModule } from 'angular2-notifications';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   // selector: 'app-usuarios',
@@ -21,52 +24,44 @@ export class UsuariosRelationComponent implements OnInit {
   selectedItems = [];
   dropdownSettings = {};
   empresas = [];
+  notificationSettings = {
+     timeOut: 3000,
+     showProgressBar: true,
+     pauseOnHover: true,
+     clickToClose: true,
+     maxLength: 50,
+     animate: 'fromRight'
+  }
 
   constructor( private http: Http, private user: UsuarioService, private app: AppComponent,
-    private auth: AuthService, private router: Router, private userEmp: UsuarioEmpresaService, private route: ActivatedRoute) {
+    private auth: AuthService, private router: Router, private userEmp: UsuarioEmpresaService,
+    private route: ActivatedRoute, private notif: NotificationsService) {
+
     app.logged = this.auth.loggedIn();
+
   }
 
   ngOnInit() {
     this.title = 'Usuários';
 
     // const id = this.route.snapshot.paramMap.get('id');
-    // this.userEmp.getEmpresas().subscribe(
-    //   (retorno) => {
-    //     if (retorno) {
-    //       retorno = retorno.usuarioEmpresas;
-    //       let i = 1;
-    //       for (const a of retorno) {
-    //           this.empresas.push({ item_id: i, item_text: a.nome });
-    //           i++;
-    //       }
-    //       console.log(this.empresas);
-    //     }
-    //   });
+    this.userEmp.getEmpresas().subscribe(
+      (retorno) => {
+        if (retorno) {
+          retorno = retorno.usuarioEmpresas;
+          for (const a of retorno) {
+              this.empresas = [... this.empresas, { item_id: a.codEmpresa, item_text: a.nomeEmpresa }];
+          }
+          // console.log(this.empresas);
+        }
+      });
 
-    // let i = 1;
-    // for (const a of auxEmp) {
-    //     this.empresas.push({ item_id: i, item_text: a.nome });
-    //     i++;
-    // }
-    // this.empresas = this.userEmp.empresas;
+    let selecionadas = JSON.parse(localStorage.getItem('empresas'));
+    console.log(selecionadas);
 
-
-    this.empresas = [
-            { item_id: 1, item_text: 'Mumbai' },
-            { item_id: 2, item_text: 'Bangaluru' },
-            { item_id: 3, item_text: 'Pune' },
-            { item_id: 4, item_text: 'Navsari' },
-            { item_id: 5, item_text: 'New Delhi' }
-        ];
-
-    console.log(this.empresas);
-    this.empresas = this.userEmp.empresas;
-    console.log(this.empresas, 'aqui');
-    this.selectedItems = [
-        { item_id: 3, item_text: 'Jason Info' },
-        { item_id: 4, item_text: 'Navsari' }
-    ];
+    for (const b of selecionadas) {
+      this.selectedItems = [... this.selectedItems, { item_id: b.codEmpresa, item_text: b.nome }];
+    }
 
     this.dropdownSettings = {
         singleSelection: false,
@@ -89,7 +84,48 @@ export class UsuariosRelationComponent implements OnInit {
   }
 
   onItemDeSelect(item: any) {
-    console.log(item);
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const codEmpresa = item['item_id'];
+    this.delEmpresaStorage(codEmpresa);
+    let title: string;
+    let content: string;
+    let type: string;
+
+    this.userEmp.delete(id, codEmpresa).subscribe(
+        (retorno) => {
+          if (retorno.message === 'Sucess') {
+             console.log(retorno);
+             title = 'Remover Relação';
+             content = 'Relação removida com sucesso';
+             type = 'success';
+             this.createNotify(title, content, type, this.notificationSettings);
+
+          } else {
+            title = 'Remover Relação';
+            content = 'Não foi possível remover a relação!';
+            type = 'warn';
+            this.createNotify(title, content, type, this.notificationSettings);
+          }
+    });
+
+
+    console.log(item['item_id'], id);
+  }
+
+  createNotify(title: any, content: any, type: any, settings: any) {
+      this.notif.create(title, content, type, settings);
+  }
+
+  delEmpresaStorage(search: any){
+    let empresas = JSON.parse(localStorage.getItem('empresas'));
+    for (let a in empresas) {
+      if (empresas[a]['codEmpresa'] == search) {
+          console.log('achou!');
+          // delete empresas['codEmpresa'];
+          empresas.splice(a, 1);
+      }
+    }
+    localStorage.setItem('empresas', JSON.stringify(empresas));
   }
 
 }

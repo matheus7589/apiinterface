@@ -8,27 +8,23 @@ import {AuthService} from './auth.service';
 
 @Injectable()
 export class UsuarioEmpresaService {
-  private urlApi = AppModule.getUrl() + '/usuarioempresa';
+  private urlApi = AppModule.getUrl() + '/empresas';
   private  token = AppModule.getToken();
-  public empresas = [{}];
 
-  constructor(private http: Http, private auth: AuthService) {
-      this.getEmpresas().subscribe(
-        (retorno) => {
-          if (retorno) {
-            retorno = retorno.usuarioEmpresas;
-            let i = 1;
-            for (const a of retorno) {
-              this.empresas.push({ item_id: i, item_text: a.nome });
-              i++;
-            }
-            // console.log(this.empresas);
-          }
-        });
-  }
+  constructor(private http: Http, private auth: AuthService) { }
 
   getEmpresas(): Observable<any> {
     return this.http.get(this.urlApi + '/getEmpresas.json?token=' + this.auth.getToken())
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  delete(user_id: number, codEmpresa: number): Observable<any> {
+    const body = 'user_id=' + user_id + '&codEmpresa=' + codEmpresa;
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers});
+    return this.http.post(AppModule.getUrl() + '/usuarioempresa/delete.json?token=' + this.auth.getToken(), body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

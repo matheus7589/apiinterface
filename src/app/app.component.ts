@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit () {
     // this.logged = this.auth.loggedIn();
+    // this.notif
   }
 
   sair() {
