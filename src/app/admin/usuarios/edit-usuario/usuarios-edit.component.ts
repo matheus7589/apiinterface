@@ -27,7 +27,7 @@ export class UsuariosEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.title = 'Usuários';
+    this.title = 'Editar usuário';
   }
 
   getUser() {
@@ -38,12 +38,12 @@ export class UsuariosEditComponent implements OnInit {
         if (retorno) {
           retorno = retorno.usuario;
           this.usuario.id = retorno.Id;
-          if(retorno.nome == null || retorno.nome === '') {
+          if (retorno.nome == null || retorno.nome === '') {
             retorno.nome = ' ';
           }
           this.usuario.nome = retorno.nome;
           this.usuario.email = retorno.email;
-          console.log(retorno);
+          // console.log(retorno);
         }
       });
   }

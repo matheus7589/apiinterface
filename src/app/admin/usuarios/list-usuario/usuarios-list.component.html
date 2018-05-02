@@ -5,7 +5,14 @@
         <div class="panel_s">
           <div class="panel-body">
 
-            <h1>{{ title }}</h1>
+            <div class="row">
+              <div class="col-md-4">
+                <h1>{{ title }}</h1>
+              </div>
+              <div class="col-md-1 offset-md-11">
+                <button type="button" (click)="add();" class="btn btn-success pull">Novo Usuário</button>
+              </div>
+            </div>
 
             <table class="table table-striped">
               <thead>
@@ -24,7 +31,8 @@
                   <td class="col-md-4">{{user.email}}</td>
                   <td class="col-md-2">
                     <button type="button" class="btn btn-info" (click)="edit(user.Id)">Editar</button>
-                    <button type="button" class="btn btn-danger" (click)="delet(user.Id)">Deletar</button>
+                    <!--<button type="button" class="btn btn-danger" (click)="delet(user.Id)">Deletar</button>-->
+                    <button type="button" class="btn btn-secondary" (click)="relate(user.Id)">Empresas</button>
                   </td>
                 </tr>
               </tbody>

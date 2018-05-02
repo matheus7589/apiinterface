@@ -5,6 +5,7 @@ import { Usuario } from '../../../services/usuarios';
 import { AppComponent } from '../../../app.component';
 import { AuthService } from '../../../services/auth.service';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   // selector: 'app-usuarios',
@@ -16,9 +17,17 @@ export class UsuariosAddComponent implements OnInit {
 
   title: string;
   error: string = null;
+  notificationSettings = {
+    timeOut: 3000,
+    showProgressBar: true,
+    pauseOnHover: true,
+    clickToClose: true,
+    maxLength: 50,
+    animate: 'fromRight'
+  };
 
   constructor( private http: Http, private user: UsuarioService, private app: AppComponent,
-    private auth: AuthService, private router: Router) {
+    private auth: AuthService, private router: Router, private notif: NotificationsService) {
     app.logged = this.auth.loggedIn();
   }
 
@@ -35,13 +44,24 @@ export class UsuariosAddComponent implements OnInit {
     usuario.codEmpresa = null;
     usuario.nomeEmpresa = null;
     usuario.inorte = null;
+    let title: string;
+    let content: string;
+    let type: string;
 
     this.user.add(usuario).subscribe(
       (retorno) => {
-        if (retorno) {
-          console.log(retorno);
+        title = 'Adicionar Usuário';
+        if (retorno.message === 'success') {
+          content = 'Usuário adicionado com sucesso!';
+          type = 'success';
+          this.createNotify(title, content, type, this.notificationSettings);
+          // console.log(retorno);
+          this.router.navigate(['admin/usuarios']);
         } else {
           this.error = 'Acesso negado';
+          content = 'Não foi possível adicionar o usuário. E-mail já existe!';
+          type = 'warn';
+          this.createNotify(title, content, type, this.notificationSettings);
         }
       },
       error => {
@@ -50,5 +70,8 @@ export class UsuariosAddComponent implements OnInit {
     return true;
   }
 
+  createNotify(title: any, content: any, type: any, settings: any) {
+    this.notif.create(title, content, type, settings);
+  }
 
 }

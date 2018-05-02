@@ -27,11 +27,11 @@ export class UsuariosListComponent implements OnInit {
     this.title = 'Usuários';
   }
 
-  getUsuarios(){
+  getUsuarios() {
     this.user.view().subscribe(
       (retorno) => {
         if (retorno) {
-          // console.log(retorno);
+          // console.log(retorno.usuario);
           this.usuarios = retorno.usuario;
         }
     });
@@ -39,21 +39,38 @@ export class UsuariosListComponent implements OnInit {
 
   refresh() {
     this.router.navigate(['admin/usuarios']);
-    this.ngOnInit();   
+    this.ngOnInit();
   }
 
 
   edit(userid: number) {
-     this.router.navigate(['admin/usuarios/edit/' + userid]); 
+     this.router.navigate(['admin/usuarios/edit/' + userid]);
   }
 
   delet(userid: number) {
-    this.user.delete(userid).subscribe(
-      (retorno) => {
-         if (retorno) {
-           this.refresh();
-         }
-      });
+    // this.user.delete(userid).subscribe(
+    //   (retorno) => {
+    //      if (retorno.message === 'success') {
+    //        console.log('O usuário foi deletado');
+    //        // this.refresh();
+    //      } else {
+    //        console.log(retorno.message);
+    //      }
+    //   });
+    const usuarios = this.usuarios;
+    for (const i in usuarios) {
+      if (usuarios[i]['Id'] === userid) {
+        usuarios.splice(i, 1);
+      }
+    }
+  }
+
+  add() {
+    this.router.navigate(['admin/usuarios/add']);
+  }
+
+  relate(id: any) {
+    this.router.navigate(['admin/usuarios/relation/' + id]);
   }
 
 }

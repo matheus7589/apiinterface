@@ -32,7 +32,7 @@ export class UsuarioService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers});
 
-    return this.http.post(this.urlApi + '/add/.json?token=' + this.auth.getToken(), body, options)
+    return this.http.post(this.urlApi + '/add.json?token=' + this.auth.getToken(), body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -64,11 +64,11 @@ export class UsuarioService {
   }
 
   public delete(id: number): Observable<any> {
-    // const body = '';
-    // const headers = new Headers();
-    // headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    // const options = new RequestOptions({headers: headers});
-    return this.http.delete(this.urlApi + '/delete/' + id + '.json?token=' + this.auth.getToken())
+    const body = 'user_id=' + id;
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers});
+    return this.http.post(this.urlApi + '/delete.json?token=' + this.auth.getToken(), body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

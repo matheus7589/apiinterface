@@ -13,18 +13,34 @@ export class UsuarioEmpresaService {
 
   constructor(private http: Http, private auth: AuthService) { }
 
-  getEmpresas(): Observable<any> {
-    return this.http.get(this.urlApi + '/getEmpresas.json?token=' + this.auth.getToken())
+  getEmpresas(id?: number): Observable<any> {
+    let url: string;
+    if (id) {
+      url = AppModule.getUrl() + '/usuarioempresa/index/' + id + '.json?token=' + this.auth.getToken();
+    } else {
+      url = this.urlApi + '/index.json?token=' + this.auth.getToken();
+    }
+    return this.http.get(url)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  delete(user_id: number, codEmpresa: number): Observable<any> {
+  deleteRelation(user_id: number, codEmpresa: number): Observable<any> {
     const body = 'user_id=' + user_id + '&codEmpresa=' + codEmpresa;
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers});
     return this.http.post(AppModule.getUrl() + '/usuarioempresa/delete.json?token=' + this.auth.getToken(), body, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  addRelation(user_id: number, codEmpresa: number, nome: string): Observable<any> {
+    const body = 'user_id=' + user_id + '&codEmpresa=' + codEmpresa + '&nome=' + nome;
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers});
+    return this.http.post(AppModule.getUrl() + '/usuarioempresa/add.json?token=' + this.auth.getToken(), body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
