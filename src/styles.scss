@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+$ag-icons-path: "~ag-grid/src/styles/balham-icons/";
+
+$header-background-color: #EF6C36;
+
+
+@import '~ag-grid/src/styles/ag-grid.scss';
+@import '~ag-grid/src/styles/ag-theme-balham.scss';

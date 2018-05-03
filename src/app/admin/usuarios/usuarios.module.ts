@@ -16,9 +16,14 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
+import { AgGridModule } from 'ag-grid-angular';
+
 @NgModule({
   imports: [
     NgMultiSelectDropDownModule.forRoot(),
+    AgGridModule.withComponents([
+      UsuariosListComponent,
+    ]),
     CommonModule,
     FormsModule,
     UsuariosRoutingModule

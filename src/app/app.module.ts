@@ -11,6 +11,7 @@ import { AdminModule } from './admin/admin.module';
 import { AuthGuard } from './services/auth-guard.service';
 
 import { UsuariosModule } from './admin/usuarios/usuarios.module';
+import { EmpresasModule } from './admin/empresas/empresas.module';
 
 import { LoginComponent } from './pages/login/login.component';
 import { UsuarioService } from './services/usuario.service';
@@ -20,6 +21,8 @@ import { PageNotFoundComponent } from './pages/errors/not-found.component';
 
 import { SimpleNotificationsModule } from 'angular2-notifications';
 // import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -31,11 +34,13 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
   imports: [
     SimpleNotificationsModule.forRoot(),
     // NgMultiSelectDropDownModule.forRoot(),
+    AgGridModule.withComponents([]),
     CommonModule,
     BrowserAnimationsModule,
     BrowserModule,
     HttpModule,
     UsuariosModule,
+    EmpresasModule,
     AdminModule,
     AppRoutingModule,
   ],

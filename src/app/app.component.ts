@@ -13,11 +13,6 @@ export class AppComponent implements OnInit {
   logged = false;
 
   constructor(private auth: AuthService, private router: Router, private location: Location, private route: ActivatedRoute) {
-    // route.queryParams.subscribe((data) => {
-    //   if (data && data['refresh']) {
-    //     this.logged = true;
-    //   }
-    // });
   }
 
   ngOnInit () {

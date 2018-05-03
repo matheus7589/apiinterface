@@ -10,24 +10,17 @@ import 'ag-grid-enterprise';
 
 @Component({
   // selector: 'app-usuarios',
-  templateUrl: './usuarios-list.component.html',
-  styleUrls: ['./usuarios-list.component.css']
+  templateUrl: './empresas-list.component.html',
+  styleUrls: ['./empresas-list.component.css']
 })
 
-export class UsuariosListComponent implements OnInit {
+export class EmpresasListComponent implements OnInit {
 
   @ViewChild('agGrid') agGrid: AgGridNg2;
   private gridApi;
   private gridColumnApi;
   title: string;
   usuarios: any;
-  // columnDefs = [
-  //   {headerName: 'Id', field: 'id', checkboxSelection: true },
-  //   {headerName: 'Nome', field: 'nome' },
-  //   {headerName: 'E-mail', field: 'email'},
-  //   {headerName: 'Opções', field: 'opt'},
-  // ];
-  // rowData = [];
 
   constructor( private http: Http, private user: UsuarioService, private app: AppComponent,
     private auth: AuthService, private router: Router) {
@@ -36,18 +29,13 @@ export class UsuariosListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.title = 'Usuários';
+    this.title = 'Empresas';
   }
 
   getUsuarios() {
     this.user.view().subscribe(
       (retorno) => {
         if (retorno) {
-          // retorno = retorno.usuario;
-          // for (const a of retorno) {
-          //   this.rowData = [...this.rowData, {id: a.Id, nome: a.nome, email: a.email, opt: 'nada'}];
-          // }
-          // console.log(retorno);
           this.usuarios = retorno.usuario;
 
         }
@@ -90,22 +78,5 @@ export class UsuariosListComponent implements OnInit {
     this.router.navigate(['admin/usuarios/relation/' + id]);
   }
 
-  getSelectedRows() {
-    const selectedNodes = this.agGrid.api.getSelectedNodes();
-    const selectedData = selectedNodes.map( node => node.data );
-    const selectedDataStringPresentation = selectedData.map( node => node.make + ' ' + node.model).join(', ');
-    alert(`Selected nodes: ${selectedDataStringPresentation}`);
-  }
-
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    params.api.sizeColumnsToFit();
-    window.addEventListener('resize', function() {
-      setTimeout(function() {
-        params.api.sizeColumnsToFit();
-      });
-    });
-  }
 
 }
