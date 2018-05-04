@@ -1,0 +1,64 @@
+<div id="wrapper">
+  <div class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel_s">
+          <div class="panel-body">
+
+            <h1>{{ title }}</h1>
+
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6 offset-md-3">
+                  <div class="form-group">
+                    <div class="input text">
+                      <label for="nomeEmpresa">Nome da Empresa</label>
+                      <input type="text" [(ngModel)]="empresa.nomeEmpresa" name="nomeEmpresa" class="form-control" maxlength="255" #nomeEmpresa
+                             id="nomeEmpresa" autocomplete="off"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input text"><label for="codEmpresa">Código da Empresa</label>
+                      <input type="number" [(ngModel)]="empresa.codEmpresa" name="codEmpresa" class="form-control" maxlength="255" #codEmpresa
+                             id="codEmpresa" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input text"><label for="prop">Proprietário</label>
+                      <input type="text" [(ngModel)]="empresa.prop" name="prop" class="form-control" maxlength="255" #prop id="prop"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input text"><label for="switch-monitorando">Monitorando: </label>
+                      <span class="switch">
+                    <input type="checkbox" [(ngModel)]="empresa.monitorando" class="form-control switch switch-sm" #monitorando id="switch-monitorando"
+                           *ngIf="empresa.monitorando; else elseBlock" checked>
+                    <ng-template #elseBlock><input type="checkbox" class="switch switch-sm"
+                                                   id="switch-monitorando">
+                    </ng-template>
+                    <label for="switch-monitorando"></label>
+                  </span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input password"><label for="password">Senha</label><input type="password" #password
+                                                                                          name="password"
+                                                                                          class="form-control"
+                                                                                          id="password"
+                                                                                          [(ngModel)]="empresa.senha"
+                                                                                          autocomplete="new-password"/>
+                    </div>
+                  </div>
+                  <button (click)="enviar()"
+                          class="btn btn-primary">Editar
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

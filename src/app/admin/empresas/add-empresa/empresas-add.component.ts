@@ -4,16 +4,15 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../services/usuarios';
 import { AppComponent } from '../../../app.component';
 import { AuthService } from '../../../services/auth.service';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({
-  // selector: 'app-usuarios',
-  templateUrl: './usuarios-add.component.html',
-  styleUrls: ['./usuarios-add.component.css']
+  templateUrl: './empresas-add.component.html',
+  styleUrls: ['./empresas-add.component.css']
 })
 
-export class UsuariosAddComponent implements OnInit {
+export class EmpresasAddComponent implements OnInit {
 
   title: string;
   error: string = null;

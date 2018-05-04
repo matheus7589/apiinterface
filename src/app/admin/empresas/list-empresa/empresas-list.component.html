@@ -6,7 +6,35 @@
           <div class="panel-body">
 
             <h1>{{title}}</h1>
-
+            <table class="table table-hover">
+              <thead>
+              <tr class="d-flex">
+                <th scope="col" class="col-md-1">Id</th>
+                <th scope="col" class="col-md-2">Cod. Empresa</th>
+                <th scope="col" class="col-md-4">Empresa</th>
+                <th scope="col" class="col-md-3">Proprietário</th>
+                <th scope="col" class="col-md-2">Monitorando</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let empresa of empresas" class="d-flex" (click)="edit(empresa.Id);">
+                <td scope="col" class="col-md-1 clicavel">#{{empresa.Id}}</td>
+                <td scope="col" class="col-md-2 clicavel">{{empresa.codEmpresa}}</td>
+                <td scope="col" class="col-md-4 clicavel">{{empresa.nomeEmpresa}}</td>
+                <td scope="col" class="col-md-3 clicavel">{{empresa.prop}}</td>
+                <td scope="col" class="col-md-2" (click)="$event.stopPropagation();">
+                  <span class="switch">
+                    <input type="checkbox" class="switch switch-sm" #monitorando id="switch-monitorando-{{empresa.Id}}"
+                           *ngIf="empresa.monitorando; else elseBlock" checked (change)="getChange();">
+                    <ng-template #elseBlock><input type="checkbox" class="switch switch-sm"
+                                                   id="switch-monitorando-{{empresa.Id}}">
+                    </ng-template>
+                    <label for="switch-monitorando-{{empresa.Id}}"></label>
+                  </span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
 
           </div>
         </div>

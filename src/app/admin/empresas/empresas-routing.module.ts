@@ -5,6 +5,9 @@ import { AuthGuard } from '../../services/auth-guard.service';
 
 import { EmpresasComponent } from './empresas.component';
 import { EmpresasListComponent } from './list-empresa/empresas-list.component';
+import { EmpresasEditComponent } from './edit-empresa/empresas-edit.component';
+
+
 const empresasRoutes: Routes = [
   {
     path: 'admin/empresas',
@@ -15,6 +18,7 @@ const empresasRoutes: Routes = [
         path: '',
         children: [
           { path: '', component: EmpresasListComponent },
+          { path: 'edit/:id', component: EmpresasEditComponent},
         ]
       }
     ]

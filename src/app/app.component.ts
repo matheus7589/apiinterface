@@ -21,8 +21,6 @@ export class AppComponent implements OnInit {
   }
 
   sair() {
-    this.router.navigate(['/login']);
-    // this.logged = false;
     this.auth.logout();
   }
 }

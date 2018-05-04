@@ -4,10 +4,8 @@ import { FormsModule } from '@angular/forms';
 
 import { EmpresasComponent } from './empresas.component';
 import { EmpresasListComponent } from './list-empresa/empresas-list.component';
-
-import { UsuarioEmpresaService } from '../../services/usuario-empresa.service';
-
-// import { DashboardComponent } from './dashboard/dashboard.component';
+import { EmpresasEditComponent } from './edit-empresa/empresas-edit.component';
+import { EmpresasAddComponent } from './add-empresa/empresas-add.component';
 
 import { EmpresasRoutingModule } from './empresas-routing.module';
 
@@ -26,6 +24,8 @@ import { AgGridModule } from 'ag-grid-angular';
   declarations: [
     EmpresasComponent,
     EmpresasListComponent,
+    EmpresasEditComponent,
+    EmpresasAddComponent,
   ]
 })
 export class EmpresasModule {}

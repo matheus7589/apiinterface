@@ -4,6 +4,7 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { AppComponent } from '../../../app.component';
 import { AuthService } from '../../../services/auth.service';
 import { UsuarioEmpresaService } from '../../../services/usuario-empresa.service';
+import { EmpresaService } from '../../../services/empresa.service';
 import { Http } from '@angular/http';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 // Notificacoes
@@ -34,7 +35,7 @@ export class UsuariosRelationComponent implements OnInit {
 
   constructor( private http: Http, private user: UsuarioService, private app: AppComponent,
     private auth: AuthService, private router: Router, private userEmp: UsuarioEmpresaService,
-    private route: ActivatedRoute, private notif: NotificationsService) {
+    private route: ActivatedRoute, private notif: NotificationsService, private emp: EmpresaService) {
 
     app.logged = this.auth.loggedIn();
 
@@ -44,14 +45,14 @@ export class UsuariosRelationComponent implements OnInit {
     this.title = 'Usuários';
 
     const id = this.route.snapshot.paramMap.get('id');
-    this.userEmp.getEmpresas().subscribe(
+    this.emp.index().subscribe(
       (retorno) => {
         if (retorno.message === 'success') {
           retorno = retorno.usuarioEmpresas;
           for (const a of retorno) {
               this.empresas = [... this.empresas, { item_id: a.codEmpresa, item_text: a.nomeEmpresa }];
           }
-          // console.log(this.empresas);
+          console.log(this.empresas);
         }
       });
 

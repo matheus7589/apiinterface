@@ -1,45 +1,44 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../../services/usuario.service';
-import { Usuario } from '../../../services/usuarios';
+import { EmpresaService } from '../../../services/empresa.service';
 import { AppComponent } from '../../../app.component';
 import { AuthService } from '../../../services/auth.service';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { AgGridNg2 } from 'ag-grid-angular';
-import 'ag-grid-enterprise';
+import { Http } from '@angular/http';
 
 @Component({
-  // selector: 'app-usuarios',
   templateUrl: './empresas-list.component.html',
   styleUrls: ['./empresas-list.component.css']
 })
 
 export class EmpresasListComponent implements OnInit {
 
-  @ViewChild('agGrid') agGrid: AgGridNg2;
-  private gridApi;
-  private gridColumnApi;
+  @ViewChild('monitorando') monitorando: any;
   title: string;
-  usuarios: any;
+  empresas: any;
 
-  constructor( private http: Http, private user: UsuarioService, private app: AppComponent,
+  constructor( private http: Http, private emp: EmpresaService, private app: AppComponent,
     private auth: AuthService, private router: Router) {
     app.logged = this.auth.loggedIn();
-    this.getUsuarios();
+    this.getEmpresas();
   }
 
   ngOnInit() {
     this.title = 'Empresas';
   }
 
-  getUsuarios() {
-    this.user.view().subscribe(
+  getEmpresas() {
+    this.emp.index().subscribe(
       (retorno) => {
         if (retorno) {
-          this.usuarios = retorno.usuario;
-
+          this.empresas = retorno.empresas;
+          // console.log(this.empresas);
         }
     });
+  }
+
+  getChange() {
+    console.log(this.monitorando.nativeElement.value());
+
   }
 
   refresh() {
@@ -48,8 +47,8 @@ export class EmpresasListComponent implements OnInit {
   }
 
 
-  edit(userid: number) {
-     this.router.navigate(['admin/usuarios/edit/' + userid]);
+  edit(empresaid: number) {
+     this.router.navigate(['admin/empresas/edit/' + empresaid]);
   }
 
   delet(userid: number) {
@@ -62,10 +61,10 @@ export class EmpresasListComponent implements OnInit {
     //        console.log(retorno.message);
     //      }
     //   });
-    const usuarios = this.usuarios;
-    for (const i in usuarios) {
-      if (usuarios[i]['Id'] === userid) {
-        usuarios.splice(i, 1);
+    const empresas = this.empresas;
+    for (const i in empresas) {
+      if (empresas[i]['Id'] === userid) {
+        empresas.splice(i, 1);
       }
     }
   }
@@ -73,10 +72,5 @@ export class EmpresasListComponent implements OnInit {
   add() {
     this.router.navigate(['admin/usuarios/add']);
   }
-
-  relate(id: any) {
-    this.router.navigate(['admin/usuarios/relation/' + id]);
-  }
-
 
 }

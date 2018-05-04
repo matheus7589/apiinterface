@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { UsuarioService } from './services/usuario.service';
 import { AuthService } from './services/auth.service';
 import { UsuarioEmpresaService } from './services/usuario-empresa.service';
+import { EmpresaService } from './services/empresa.service';
 import { PageNotFoundComponent } from './pages/errors/not-found.component';
 
 import { SimpleNotificationsModule } from 'angular2-notifications';
@@ -36,6 +38,7 @@ import { AgGridModule } from 'ag-grid-angular';
     // NgMultiSelectDropDownModule.forRoot(),
     AgGridModule.withComponents([]),
     CommonModule,
+    FormsModule,
     BrowserAnimationsModule,
     BrowserModule,
     HttpModule,
@@ -44,7 +47,7 @@ import { AgGridModule } from 'ag-grid-angular';
     AdminModule,
     AppRoutingModule,
   ],
-  providers: [UsuarioService, AuthService, UsuarioEmpresaService, AuthGuard],
+  providers: [UsuarioService, AuthService, UsuarioEmpresaService, AuthGuard, EmpresaService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -15,41 +15,28 @@
             </div>
 
             <table class="table table-striped">
-            <thead>
-            <tr class="d-flex">
-            <th scope="col" class="col-md-1">id</th>
-            <th scope="col" class="col-md-5">Nome</th>
-            <th scope="col" class="col-md-4">E-mail</th>
-            <th scope="col" class="col-md-2">Opções</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor ="let user of usuarios" class="d-flex">
-            <td class="col-md-1" scope="row">{{user.Id}}</td>
-            <td class="col-md-5" *ngIf="user.nome">{{user.nome}}</td>
-            <td class="col-md-5" *ngIf="!user.nome">**Usuário sem Nome**</td>
-            <td class="col-md-4">{{user.email}}</td>
-            <td class="col-md-2">
-            <button type="button" class="btn btn-info" (click)="edit(user.Id)">Editar</button>
-            <!--<button type="button" class="btn btn-danger" (click)="delet(user.Id)">Deletar</button>-->
-            <button type="button" class="btn btn-secondary" (click)="relate(user.Id)">Empresas</button>
-            </td>
-            </tr>
-            </tbody>
+              <thead>
+              <tr class="d-flex">
+                <th scope="col" class="col-md-1">id</th>
+                <th scope="col" class="col-md-5">Nome</th>
+                <th scope="col" class="col-md-4">E-mail</th>
+                <th scope="col" class="col-md-2">Opções</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let user of usuarios" class="d-flex">
+                <td class="col-md-1" scope="row">{{user.Id}}</td>
+                <td class="col-md-5" *ngIf="user.nome">{{user.nome}}</td>
+                <td class="col-md-5" *ngIf="!user.nome">**Usuário sem Nome**</td>
+                <td class="col-md-4">{{user.email}}</td>
+                <td class="col-md-2">
+                  <button type="button" class="btn btn-info" (click)="edit(user.Id)">Editar</button>
+                  <!--<button type="button" class="btn btn-danger" (click)="delet(user.Id)">Deletar</button>-->
+                  <button type="button" class="btn btn-secondary" (click)="relate(user.Id)">Empresas</button>
+                </td>
+              </tr>
+              </tbody>
             </table>
-
-            <!--<ag-grid-angular-->
-              <!--#agGrid-->
-              <!--style="min-height: 200px;"-->
-              <!--id="usuarios"-->
-              <!--class="ag-theme-balham"-->
-              <!--domLayout="autoHeight"-->
-              <!--rowSelection="multiple"-->
-              <!--[rowData]="rowData"-->
-              <!--[columnDefs]="columnDefs"-->
-              <!--(gridReady)="onGridReady($event)"-->
-            <!--&gt;-->
-            <!--</ag-grid-angular>-->
 
           </div>
         </div>

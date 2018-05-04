@@ -4,38 +4,34 @@ import { Observable } from 'rxjs/Observable';
 import { AppModule } from '../app.module';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {AuthService} from './auth.service';
 
 @Injectable()
-export class UsuarioEmpresaService {
-  private urlApi = AppModule.getUrl() + '/usuarioempresa';
+export class EmpresaService {
+  private urlApi = AppModule.getUrl() + '/empresas';
+  private token = AppModule.getToken();
+  constructor(private http: Http) {}
 
-  constructor(private http: Http, private auth: AuthService) { }
-
-  getEmpresas(id: number): Observable<any> {
-    let url: string;
-    url = this.urlApi + '/index/' + id + '.json?token=' + this.auth.getToken();
-    return this.http.get(url)
+  index(): Observable<any> {
+    return this.http.get(this.urlApi + '/index.json?token=' + this.token)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  deleteRelation(user_id: number, codEmpresa: number): Observable<any> {
-    const body = 'user_id=' + user_id + '&codEmpresa=' + codEmpresa;
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    const options = new RequestOptions({headers: headers});
-    return this.http.post(this.urlApi + '/delete.json?token=' + this.auth.getToken(), body, options)
+  view(id: number): Observable<any> {
+    return this.http.get(this.urlApi + '/view/' + id + '.json?token=' + this.token)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  addRelation(user_id: number, codEmpresa: number, nome: string): Observable<any> {
-    const body = 'user_id=' + user_id + '&codEmpresa=' + codEmpresa + '&nome=' + nome;
+  public edit(empresa: any): Observable<any> {
+    console.log(empresa);
+    const body = 'nome=' + empresa.nomeEmpresa +
+      '&codEmpresa=' + empresa.codEmpresa;
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers});
-    return this.http.post( this.urlApi + '/add.json?token=' + this.auth.getToken(), body, options)
+
+    return this.http.post(this.urlApi + '/edit/' + empresa.id + '.json?token=' + this.token, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -57,5 +53,4 @@ export class UsuarioEmpresaService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-
 }
