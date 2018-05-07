@@ -70,7 +70,7 @@ export class EmpresasListComponent implements OnInit {
   }
 
   add() {
-    this.router.navigate(['admin/usuarios/add']);
+    this.router.navigate(['admin/empresas/add']);
   }
 
 }

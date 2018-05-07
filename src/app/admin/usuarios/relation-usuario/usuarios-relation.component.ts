@@ -24,14 +24,14 @@ export class UsuariosRelationComponent implements OnInit {
   selectedItems = [];
   dropdownSettings = {};
   empresas = [];
-  notificationSettings = {
-     timeOut: 3000,
-     showProgressBar: true,
-     pauseOnHover: true,
-     clickToClose: true,
-     maxLength: 50,
-     animate: 'fromRight'
-  };
+  // notificationSettings = {
+  //    timeOut: 3000,
+  //    showProgressBar: true,
+  //    pauseOnHover: true,
+  //    clickToClose: true,
+  //    maxLength: 50,
+  //    animate: 'fromRight'
+  // };
 
   constructor( private http: Http, private user: UsuarioService, private app: AppComponent,
     private auth: AuthService, private router: Router, private userEmp: UsuarioEmpresaService,
@@ -48,7 +48,7 @@ export class UsuariosRelationComponent implements OnInit {
     this.emp.index().subscribe(
       (retorno) => {
         if (retorno.message === 'success') {
-          retorno = retorno.usuarioEmpresas;
+          retorno = retorno.empresas;
           for (const a of retorno) {
               this.empresas = [... this.empresas, { item_id: a.codEmpresa, item_text: a.nomeEmpresa }];
           }
@@ -98,11 +98,11 @@ export class UsuariosRelationComponent implements OnInit {
             if (retorno.message === 'success') {
               content = 'Empresa adicionada com sucesso!';
               type = 'success';
-              this.createNotify(title, content, type, this.notificationSettings);
+              this.app.createNotify(title, content, type);
             } else {
               content = retorno.message;
               type = 'warn';
-              this.createNotify(title, content, type, this.notificationSettings);
+              this.app.createNotify(title, content, type);
             }
 
         }
@@ -128,19 +128,15 @@ export class UsuariosRelationComponent implements OnInit {
           if (retorno.message === 'Sucess') {
              content = 'Empresa removida com sucesso!';
              type = 'success';
-             this.createNotify(title, content, type, this.notificationSettings);
+             this.app.createNotify(title, content, type);
 
           } else {
             content = 'Não foi possível remover a empresa!';
             type = 'warn';
-            this.createNotify(title, content, type, this.notificationSettings);
+            this.app.createNotify(title, content, type);
           }
     });
     // console.log(item['item_id'], id);
-  }
-
-  createNotify(title: any, content: any, type: any, settings: any) {
-      this.notif.create(title, content, type, settings);
   }
 
   delEmpresaStorage(search: any) {

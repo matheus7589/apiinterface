@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../../services/usuario.service';
-import { Usuario } from '../../../services/usuarios';
+import { EmpresaService } from '../../../services/empresa.service';
 import { AppComponent } from '../../../app.component';
 import { AuthService } from '../../../services/auth.service';
 import { Http } from '@angular/http';
-import { NotificationsService } from 'angular2-notifications';
+import {Empresa} from '../../../services/empresas';
 
 @Component({
   templateUrl: './empresas-add.component.html',
@@ -16,61 +15,44 @@ export class EmpresasAddComponent implements OnInit {
 
   title: string;
   error: string = null;
-  notificationSettings = {
-    timeOut: 3000,
-    showProgressBar: true,
-    pauseOnHover: true,
-    clickToClose: true,
-    maxLength: 50,
-    animate: 'fromRight'
-  };
+  empresa: Empresa = new Empresa;
+  titleNotification: string;
+  contentNotification: string;
+  typeNotification: string;
 
-  constructor( private http: Http, private user: UsuarioService, private app: AppComponent,
-    private auth: AuthService, private router: Router, private notif: NotificationsService) {
+  constructor( private http: Http, private emp: EmpresaService, private app: AppComponent,
+    private auth: AuthService, private router: Router) {
     app.logged = this.auth.loggedIn();
   }
 
   ngOnInit() {
-    this.title = 'Usuários';
+    this.title = 'Adicionar Empresa';
   }
 
-  add(nome: string, password: string, email: string): boolean {
-    let usuario: Usuario;
-    usuario = new Usuario();
-    usuario.nome = nome;
-    usuario.password = password;
-    usuario.email = email;
-    usuario.codEmpresa = null;
-    usuario.nomeEmpresa = null;
-    usuario.inorte = null;
-    let title: string;
-    let content: string;
-    let type: string;
+  add(): boolean {
 
-    this.user.add(usuario).subscribe(
+    console.log(this.empresa);
+
+    this.emp.add(this.empresa).subscribe(
       (retorno) => {
-        title = 'Adicionar Usuário';
+        this.titleNotification = 'Adicionar Empresa';
         if (retorno.message === 'success') {
-          content = 'Usuário adicionado com sucesso!';
-          type = 'success';
-          this.createNotify(title, content, type, this.notificationSettings);
+          this.contentNotification = 'Empresa adicionada com sucesso!';
+          this.typeNotification = 'success';
+          this.app.createNotify(this.titleNotification, this.contentNotification, this.typeNotification);
           // console.log(retorno);
-          this.router.navigate(['admin/usuarios']);
+          this.router.navigate(['admin/empresas']);
         } else {
           this.error = 'Acesso negado';
-          content = 'Não foi possível adicionar o usuário. E-mail já existe!';
-          type = 'warn';
-          this.createNotify(title, content, type, this.notificationSettings);
+          this.contentNotification = 'Não foi possível adicionar a Empresa!';
+          this.typeNotification = 'warn';
+          this.app.createNotify(this.titleNotification, this.contentNotification, this.typeNotification);
         }
       },
       error => {
         (error) = this.error = error;
       });
     return true;
-  }
-
-  createNotify(title: any, content: any, type: any, settings: any) {
-    this.notif.create(title, content, type, settings);
   }
 
 }

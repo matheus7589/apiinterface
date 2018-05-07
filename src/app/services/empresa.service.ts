@@ -23,15 +23,29 @@ export class EmpresaService {
       .catch(this.handleError);
   }
 
-  public edit(empresa: any): Observable<any> {
-    console.log(empresa);
-    const body = 'nome=' + empresa.nomeEmpresa +
-      '&codEmpresa=' + empresa.codEmpresa;
+  public add(empresa: any): Observable<any> {
+    const body = 'nomeEmpresa=' + empresa.nomeEmpresa +
+      '&senha=' + empresa.senha + '&prop=' + empresa.prop +
+      '&codEmpresa=' + empresa.codEmpresa + '&monitorando=0' + '&gerar_eventos=0';
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     const options = new RequestOptions({headers: headers});
 
-    return this.http.post(this.urlApi + '/edit/' + empresa.id + '.json?token=' + this.token, body, options)
+    return this.http.post(this.urlApi + '/add.json?token=' + this.token, body, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  public edit(empresa: any): Observable<any> {
+    console.log(empresa);
+    const body = 'nomeEmpresa=' + empresa.nomeEmpresa +
+      '&codEmpresa=' + empresa.codEmpresa + '&prop=' + empresa.prop +
+      '&senha=' + empresa.senha + '&id=' + empresa.id;
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    const options = new RequestOptions({headers: headers});
+
+    return this.http.post(this.urlApi + '/edit.json?token=' + this.token, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

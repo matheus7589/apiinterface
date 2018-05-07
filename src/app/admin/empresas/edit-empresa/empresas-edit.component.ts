@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { EmpresaService } from '../../../services/empresa.service';
 import { Empresa } from '../../../services/empresas';
 import { AppComponent } from '../../../app.component';
@@ -17,8 +17,12 @@ export class EmpresasEditComponent implements OnInit {
   title: string;
   error: string = null;
   empresa: Empresa = new Empresa;
+  titleNotification: string;
+  contentNotification: string;
+  typeNotification: string;
 
-  constructor( private http: Http, private emp: EmpresaService,
+
+  constructor( private http: Http, private emp: EmpresaService, private router: Router,
     private app: AppComponent, private auth: AuthService, private route: ActivatedRoute) {
     app.logged = this.auth.loggedIn();
     this.getEmpresa();
@@ -55,19 +59,28 @@ export class EmpresasEditComponent implements OnInit {
 
   enviar(): boolean {
 
-    console.log(this.empresa);
+    if (!this.empresa.senha) {
+      this.empresa.senha = '';
+    }
 
-    // this.emp.edit(this.empresa).subscribe(
-    //   (retorno) => {
-    //     if (retorno) {
-    //       console.log(retorno);
-    //     } else {
-    //       this.error = 'Acesso negado';
-    //     }
-    //   },
-    //   error => {
-    //     (error) = this.error = error;
-    //   });
+    this.emp.edit(this.empresa).subscribe(
+      (retorno) => {
+        this.titleNotification = 'Editar empresa'
+        if (retorno.message === 'success') {
+          this.contentNotification = 'Empresa Editada com Sucesso!';
+          this.typeNotification = 'success';
+          this.app.createNotify(this.titleNotification, this.contentNotification, this.typeNotification);
+          this.router.navigate(['admin/empresas']);
+        } else {
+          this.contentNotification = 'Não foi possível editar empresa!';
+          this.typeNotification = 'warn';
+          this.app.createNotify(this.titleNotification, this.contentNotification, this.typeNotification);
+          // this.error = 'Acesso negado';
+        }
+      },
+      error => {
+        (error) = this.error = error;
+      });
     return true;
   }
 

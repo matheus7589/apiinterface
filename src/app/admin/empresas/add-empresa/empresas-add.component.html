@@ -12,22 +12,34 @@
                 <div class="col-md-6 offset-md-3">
                   <div class="form-group">
                     <div class="input text">
-                      <label for="nome">Nome de Usuário</label>
-                      <input type="text" name="nome" class="form-control" maxlength="255" #nome id="nome" autocomplete="off"/>
+                      <label for="nomeEmpresa">Nome da Empresa</label>
+                      <input type="text" [(ngModel)]="empresa.nomeEmpresa" name="nomeEmpresa" class="form-control" maxlength="255" #nomeEmpresa
+                             id="nomeEmpresa" autocomplete="off"/>
                     </div>
                   </div>
                   <div class="form-group">
-                    <div class="input text"><label for="email">Email</label>
-                      <input type="email" name="email" class="form-control" maxlength="255" #email id="email"/>
+                    <div class="input text"><label for="codEmpresa">Código da Empresa</label>
+                      <input type="number" [(ngModel)]="empresa.codEmpresa" name="codEmpresa" class="form-control" maxlength="255" #codEmpresa
+                             id="codEmpresa" />
                     </div>
                   </div>
                   <div class="form-group">
-                    <div class="input password">
-                      <label for="password">Senha</label>
-                      <input type="password" #password name="password" class="form-control" id="password" autocomplete="new-password"/>
-                      </div>
+                    <div class="input text"><label for="prop">Proprietário</label>
+                      <input type="text" [(ngModel)]="empresa.prop" name="prop" class="form-control" maxlength="255" #prop id="prop"/>
+                    </div>
                   </div>
-                    <button (click)="add(nome.value, password.value, email.value)" class="btn btn-primary">Adicionar</button>
+                  <div class="form-group">
+                    <div class="input password"><label for="password">Senha</label><input type="password" #password
+                                                                                          name="password"
+                                                                                          class="form-control"
+                                                                                          id="password"
+                                                                                          [(ngModel)]="empresa.senha"
+                                                                                          autocomplete="new-password"/>
+                    </div>
+                  </div>
+                  <button (click)="add()"
+                          class="btn btn-primary">Adicionar
+                  </button>
                 </div>
               </div>
             </div>

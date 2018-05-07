@@ -57,6 +57,7 @@ export class AppModule {
   private static token = 'fb65412704d49d604e97bfdb770f6d8423918bf0039bd3579d8dd5b46c57e85c';
   public logged = false;
 
+
   public static getUrl(): string {
     return this.url;
   }
