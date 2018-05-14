@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import {ActivatedRoute, Route, Router} from '@angular/router';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Usuario } from '../../../services/usuarios';
 import { AppComponent } from '../../../app.component';
@@ -17,8 +17,11 @@ export class UsuariosEditComponent implements OnInit {
   title: string;
   error: string = null;
   usuario: Usuario = new Usuario;
+  titleNot: string;
+  contentNot: string;
+  typeNot: string;
 
-  constructor( private http: Http, private user: UsuarioService,
+  constructor( private http: Http, private user: UsuarioService, private router: Router,
     private app: AppComponent, private auth: AuthService, private route: ActivatedRoute) {
     app.logged = this.auth.loggedIn();
     this.getUser();
@@ -58,7 +61,12 @@ export class UsuariosEditComponent implements OnInit {
 
     this.user.edit(usuario).subscribe(
       (retorno) => {
-        if (retorno) {
+        this.titleNot = 'Editar Usuário';
+        if (retorno.message === 'success') {
+          this.contentNot = 'Usuário editado com sucesso!';
+          this.typeNot = 'success';
+          this.app.createNotify(this.titleNot, this.contentNot, this.typeNot);
+          this.router.navigate(['admin/usuarios']);
           console.log(retorno);
         } else {
           this.error = 'Acesso negado';

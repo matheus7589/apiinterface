@@ -14,6 +14,9 @@ export class AuthService {
   public token: string;
   public username: string;
   public password: string;
+  titleNot: string;
+  contentNot: string;
+  typeNot: string;
 
   constructor(private http: Http) { }
 
@@ -72,7 +75,7 @@ export class AuthService {
   private handleError(error: any) {
     const errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg);
+    console.error(errMsg, 'aqui');
     return Observable.throw(errMsg);
   }
 
